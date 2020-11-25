@@ -93,7 +93,7 @@ npm run test:docker
   ```sh
   # when request path is /heroes
   # when request has auth headers
-  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes
+  curl -H 'Name: hahow' -H 'Password: rocks' http://localhost:8080/heroes
 
   # then response status should be 200
   # then response body should have heroes props
@@ -134,7 +134,7 @@ npm run test:docker
   ```sh
   # when request path is /heroes/1
   # when request has auth headers
-  curl -H "Name: hahow" -H "Password: rocks" https://yourapiserver/heroes/1
+  curl -H 'Name: hahow' -H 'Password: rocks' https://yourapiserver/heroes/1
 
   # then response status should be 200
   # then response body should be hero
