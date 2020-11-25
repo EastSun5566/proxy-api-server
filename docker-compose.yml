@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  server:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/app:delegated
+    ports:
+      - 8080:8080
