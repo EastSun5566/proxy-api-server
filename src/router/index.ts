@@ -4,16 +4,13 @@ import {
   HomeController,
   HeroController,
 } from '../controllers';
-import {
-  HomeService,
-  HeroService,
-} from '../services';
+import { HeroService } from '../services';
 import { HeroModel } from '../models';
 import { HahowAPI } from '../datasources';
 import { registerRoute, Route } from './utils';
 
 export const createRouter = (router: Router): Router => {
-  const homeController = new HomeController(new HomeService());
+  const homeController = new HomeController();
   const bookController = new HeroController(
     new HeroService({ hero: new HeroModel({ store: new HahowAPI() }) }),
   );
