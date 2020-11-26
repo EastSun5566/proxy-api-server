@@ -1,22 +1,24 @@
 import { IMiddleware } from 'koa-router';
 import { IAuthService } from '../services';
+import { State } from '../interfaces';
+import { UnauthenticatedError } from '../utils/errors';
 
-interface Headers {
+interface Header {
   name?: string;
   password?: string
 }
 
 export const auth = (
   authService: IAuthService,
-): IMiddleware => async (ctx, next) => {
-  const { headers: { name, password } }: { headers: Headers } = ctx;
+): IMiddleware<State> => async (ctx, next) => {
+  const { header: { name, password } }: { header: Header } = ctx;
 
   if (!name && !password) {
     ctx.state.isAuth = false;
     await next();
     return;
   }
-  if (!name || !password) throw new Error('No name or pwd');
+  if (!name || !password) throw new UnauthenticatedError();
 
   ctx.state.isAuth = await authService.auth({ name, password });
   await next();

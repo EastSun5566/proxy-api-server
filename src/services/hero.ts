@@ -2,10 +2,14 @@ import { IHeroModel } from '../models';
 import { GetHeroParam } from '../datasources';
 import { Hero } from '../domains';
 
+interface QueryParam {
+  isAuth?: boolean
+}
+
 export interface IHeroService {
 
-  find(): Promise<Hero[]>;
-  findById(id: GetHeroParam['heroId']): Promise<Hero>;
+  find(param: QueryParam): Promise<Hero[]>;
+  findById(param: QueryParam & GetHeroParam): Promise<Hero>;
 
 }
 
@@ -15,12 +19,32 @@ export class HeroService implements IHeroService {
     private models: { hero: IHeroModel },
   ) {}
 
-  find(): Promise<Hero[]> {
-    return this.models.hero.find();
+  async find({ isAuth }: QueryParam): Promise<Hero[]> {
+    if (!isAuth) return this.models.hero.find();
+
+    const heroes = await this.models.hero.find();
+    const heroProfiles = await Promise.all(
+      heroes.map(({ id }) => this.models.hero.findProfileById(id)),
+    );
+
+    return heroes.map((hero, index) => ({
+      ...hero,
+      profile: heroProfiles[index],
+    }));
   }
 
-  findById(id: GetHeroParam['heroId']): Promise<Hero> {
-    return this.models.hero.findById(id);
+  async findById({ isAuth, heroId }: QueryParam & GetHeroParam): Promise<Hero> {
+    if (!isAuth) return this.models.hero.findById(heroId);
+
+    const [hero, heroProfile] = await Promise.all([
+      this.models.hero.findById(heroId),
+      this.models.hero.findProfileById(heroId),
+    ]);
+
+    return {
+      ...hero,
+      profile: heroProfile,
+    };
   }
 }
 
