@@ -1,7 +1,8 @@
-import { HahowAPI, AuthParam, AuthRes } from '../datasources';
+import { AxiosError } from 'axios';
+import { HahowAPI, AuthParam } from '../datasources';
 
 export interface IAuthModel {
-  checkAuth(authParma: AuthParam): Promise<AuthRes>;
+  checkAuth(param: AuthParam): Promise<boolean>;
 }
 
 export class AuthModel implements IAuthModel {
@@ -11,8 +12,18 @@ export class AuthModel implements IAuthModel {
     this.store = store;
   }
 
-  async checkAuth(authParam: AuthParam): Promise<AuthRes> {
-    return this.store.auth(authParam);
+  async checkAuth(param: AuthParam): Promise<boolean> {
+    try {
+      const { status } = await this.store.auth(param);
+
+      if (status === 200) return true;
+      return false;
+    } catch (err) {
+      if (err.isAxiosError) {
+        if ((err as AxiosError).response?.status === 401) return false;
+      }
+      throw err;
+    }
   }
 }
 

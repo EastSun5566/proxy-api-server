@@ -1,19 +1,12 @@
-import { Context } from 'koa';
-
-import { IHomeService } from '../services/home';
+import { IMiddleware } from 'koa-router';
 
 interface IHomeController {
-  get(ctx: Context): void;
+  get: IMiddleware;
 }
 
 export class HomeController implements IHomeController {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(
-    private readonly homeService: IHomeService,
-  ) {}
-
-  get = (ctx: Context): void => {
-    ctx.body = this.homeService.greet();
+  get: IMiddleware = (ctx): void => {
+    ctx.body = 'Welcome to Hero API server 🎉';
   }
 }
 

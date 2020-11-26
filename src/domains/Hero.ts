@@ -2,7 +2,7 @@ export interface Hero {
   id: number;
   name: string;
   image: string;
-  profile: {
+  profile?: {
     str: number;
     int: number;
     agi: number;

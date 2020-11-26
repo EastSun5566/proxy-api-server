@@ -1,8 +1,8 @@
 import { IAuthModel } from '../models';
-import { AuthParam, AuthRes } from '../datasources';
+import { AuthParam } from '../datasources';
 
 export interface IAuthService {
-  auth({ name, password }: AuthParam): Promise<AuthRes>;
+  auth(param: AuthParam): Promise<boolean>;
 
 }
 
@@ -12,8 +12,8 @@ export class AuthService implements IAuthService {
     private models: { auth: IAuthModel },
   ) {}
 
-  auth(authInfo: AuthParam): Promise<AuthRes> {
-    return this.models.auth.checkAuth(authInfo);
+  auth(param: AuthParam): Promise<boolean> {
+    return this.models.auth.checkAuth(param);
   }
 }
 
