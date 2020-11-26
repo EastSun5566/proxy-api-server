@@ -18,7 +18,7 @@ export class HeroController implements IHeroController {
   ) {}
 
   list: IMiddleware = async (ctx) => {
-    // ctx.body = await this.HeroService.find();
+    ctx.body = await this.HeroService.find();
   }
 
   get: IMiddleware = async (ctx) => {
