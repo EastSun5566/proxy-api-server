@@ -2,18 +2,16 @@ import Router from 'koa-router';
 
 import {
   HomeController,
-  BookController,
+  HeroController,
 } from '../controllers';
 import {
   HomeService,
-  BookService,
 } from '../services';
-import { BookModel } from '../models';
 import { registerRoute, Route } from './utils';
 
 export const createRouter = (router: Router): Router => {
   const homeController = new HomeController(new HomeService());
-  const bookController = new BookController(new BookService({ book: new BookModel() }));
+  const bookController = new HeroController();
 
   const routes: Route[] = [
     {
@@ -22,19 +20,14 @@ export const createRouter = (router: Router): Router => {
       handler: homeController.get,
     },
     {
-      path: '/books',
+      path: '/heroes',
       method: 'get',
       handler: bookController.list,
       children: [
         {
-          path: ':id',
+          path: ':heroId',
           method: 'get',
           handler: bookController.get,
-        },
-        {
-          path: '',
-          method: 'post',
-          handler: bookController.create,
         },
       ],
     },

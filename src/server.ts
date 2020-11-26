@@ -6,7 +6,11 @@ import helmet from 'koa-helmet';
 import bodyParser from 'koa-bodyparser';
 
 import { createRouter } from './router';
-import { errorHandler } from './middlewares';
+import { errorHandler, auth } from './middlewares';
+
+import { AuthService } from './services';
+import { AuthModel } from './models';
+import { HahowAPI } from './datasources';
 
 interface ServerOptions extends IRouterOptions {
   port?: number;
@@ -21,6 +25,7 @@ export const createServer = (options: ServerOptions = {}): Server => {
     .use(helmet())
     .use(bodyParser())
     .use(errorHandler())
+    .use(auth(new AuthService({ auth: new AuthModel({ store: new HahowAPI() }) })))
     .use(router.routes())
     .use(router.allowedMethods())
     .listen(port);
