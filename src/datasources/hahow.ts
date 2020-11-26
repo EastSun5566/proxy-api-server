@@ -15,11 +15,11 @@ export interface GetHeroParam {
 export class HahowAPI {
   request = axios.create({ baseURL: config.hahowAPIBaseURL });
 
-  auth(authParam: AuthParam): AxiosPromise<void> {
+  auth(param: AuthParam): AxiosPromise<void> {
     return this.request({
       url: '/auth',
       method: 'post',
-      data: authParam,
+      data: param,
     });
   }
 

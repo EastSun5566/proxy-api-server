@@ -13,14 +13,13 @@ export const auth = (
 
   if (!name && !password) {
     ctx.state.isAuth = false;
-    next();
+    await next();
     return;
   }
   if (!name || !password) throw new Error('No name or pwd');
 
   ctx.state.isAuth = await authService.auth({ name, password });
-
-  next();
+  await next();
 };
 
 export default auth;

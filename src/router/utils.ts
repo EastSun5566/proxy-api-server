@@ -23,19 +23,13 @@ export const registerRoute = ({
     children,
   } = route;
 
-  if (children?.length) {
-    if (method && handler) router[method](`${prefixPath}/${path}`, handler);
+  if (method && handler) router[method](`${prefixPath}${path}`, handler);
 
+  if (children?.length) {
     children.forEach((nestRoute) => registerRoute({
       router,
       route: nestRoute,
-      prefixPath: `${prefixPath}/${nestRoute.path}`,
+      prefixPath: `${prefixPath}${path}`,
     }));
-    return;
   }
-
-  if (!method) throw new Error('No method');
-  if (!handler) throw new Error('No handler');
-
-  router[method](`${prefixPath}/${path}`, handler);
 };

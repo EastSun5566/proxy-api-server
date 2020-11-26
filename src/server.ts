@@ -3,6 +3,7 @@ import { Server } from 'http';
 import Koa from 'koa';
 import Router, { IRouterOptions } from 'koa-router';
 import helmet from 'koa-helmet';
+import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 
 import { createRouter } from './router';
@@ -22,6 +23,7 @@ export const createServer = (options: ServerOptions = {}): Server => {
   const port = options.port || process.env.PORT || 8080;
 
   const server = new Koa()
+    .use(logger())
     .use(helmet())
     .use(bodyParser())
     .use(errorHandler())

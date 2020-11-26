@@ -1,32 +1,30 @@
 /* eslint-disable class-methods-use-this */
-import { RouterContext as Context } from 'koa-router';
-
-import { Hero } from '../domains';
-// import { IHeroService } from '../services';
+import { IMiddleware } from 'koa-router';
+import { IHeroService } from '../services';
 
 interface getHeroDTO {
-  id: number
+  heroId: number
 }
 
 interface IHeroController {
-  list(ctx: Context): Promise<void>;
-  get(ctx: Context): Promise<void>;
+  list: IMiddleware;
+  get: IMiddleware;
 }
 
 export class HeroController implements IHeroController {
   // eslint-disable-next-line no-useless-constructor
-  // constructor(
-  //   private readonly HeroService: IHeroService,
-  // ) {}
+  constructor(
+    private readonly HeroService: IHeroService,
+  ) {}
 
-  async list(ctx: Context): Promise<void> {
+  list: IMiddleware = async (ctx) => {
     // ctx.body = await this.HeroService.find();
   }
 
-  async get(ctx: Context): Promise<void> {
-    // const { params }: { params: getHeroDTO } = ctx;
+  get: IMiddleware = async (ctx) => {
+    const { params }: { params: getHeroDTO } = ctx;
 
-    // ctx.body = await this.HeroService.findByID(params.id);
+    ctx.body = await this.HeroService.findById(params.heroId);
   }
 }
 
