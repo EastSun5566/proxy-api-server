@@ -1,31 +1,43 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosPromise } from 'axios';
+
 import { config } from '../config';
+import { Hero } from '../domains';
 
 export interface AuthParam {
   name: string;
   password: string
 }
 
-export type AuthRes = boolean;
+export interface GetHeroParam {
+  heroId: number;
+}
 
 export class HahowAPI {
   request = axios.create({ baseURL: config.hahowAPIBaseURL });
 
-  async auth(authParam: AuthParam): Promise<AuthRes> {
-    try {
-      const res = await this.request({
-        url: '/auth',
-        method: 'post',
-        data: authParam,
-      });
+  auth(authParam: AuthParam): AxiosPromise<void> {
+    return this.request({
+      url: '/auth',
+      method: 'post',
+      data: authParam,
+    });
+  }
 
-      if (res.status === 200) return true;
-      return false;
-    } catch (err) {
-      if (err.isAxiosError) {
-        if ((err as AxiosError).response?.status === 401) return false;
-      }
-      throw err;
-    }
+  listHeroes(): AxiosPromise<Hero[]> {
+    return this.request({
+      url: '/heroes',
+    });
+  }
+
+  getHero({ heroId }: GetHeroParam): AxiosPromise<Hero> {
+    return this.request({
+      url: `/heroes/${heroId}`,
+    });
+  }
+
+  getHeroProfile({ heroId }: GetHeroParam): AxiosPromise<Hero['profile']> {
+    return this.request({
+      url: `/heroes/${heroId}/profile`,
+    });
   }
 }
