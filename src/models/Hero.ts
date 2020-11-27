@@ -27,34 +27,32 @@ export class HeroModel implements Hero {
   static store = new HahowAPI();
 
   static async find(): Promise<HeroModel[]> {
-    const { data } = await HeroModel.store.listHeroes();
+    const { data: heroes } = await HeroModel.store.listHeroes();
 
-    return data.map((heroData) => new HeroModel(heroData));
+    return heroes.map((hero) => new HeroModel(hero));
   }
 
   static async findById(id: GetHeroParam['heroId']): Promise<HeroModel> {
     try {
-      const { data } = await HeroModel.store.getHero({ heroId: id });
+      const { data: hero } = await HeroModel.store.getHero({ heroId: id });
 
-      return new HeroModel(data);
+      return new HeroModel(hero);
     } catch (err) {
-      if (err.isAxiosError) {
-        if ((err as AxiosError).response?.status === 404) throw new NotFoundError();
-      }
+      if ((err as AxiosError).response?.status === 404) throw new NotFoundError();
+
       throw err;
     }
   }
 
   async findProfile(): Promise<HeroModel> {
     try {
-      const { data } = await HeroModel.store.getHeroProfile({ heroId: this.id });
+      const { data: profile } = await HeroModel.store.getHeroProfile({ heroId: this.id });
 
-      this.profile = data;
+      this.profile = profile;
       return this;
     } catch (err) {
-      if (err.isAxiosError) {
-        if ((err as AxiosError).response?.status === 404) throw new NotFoundError();
-      }
+      if ((err as AxiosError).response?.status === 404) throw new NotFoundError();
+
       throw err;
     }
   }
