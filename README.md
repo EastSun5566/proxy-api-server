@@ -19,10 +19,13 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
 ## Using stack
 
 - Node.js v12 w/ TypeScript
-- Docker
 - Jest
 
 ## Getting started
+
+### Requirement
+
+- Node.js v10+
 
 ### Installation
 
@@ -30,16 +33,16 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
 npm i
 ```
 
-### Starting server with docker
+### Building & Starting
 
 ```sh
-npm run start:docker
+npm run build && npm start
 ```
 
-### Starting test with docker
+### Testing
 
 ```sh
-npm run test:docker
+npm test
 ```
 
 ## Test cases
@@ -47,10 +50,8 @@ npm run test:docker
 - Scenario: List heroes
 
   ```sh
-  # when get /heroes
   curl -i http://localhost:8080/heroes
 
-  # then should get heroes
   HTTP/1.1 200 OK
 
   {
@@ -73,10 +74,8 @@ npm run test:docker
 - Scenario: Get single hero
 
   ```sh
-  # when get /heroes/1
   curl -i http://localhost:8080/heroes/1
 
-  # then should get hero with id 1
   HTTP/1.1 200 OK
 
   {
@@ -89,10 +88,8 @@ npm run test:docker
 - Scenario: List authenticated heroes
 
   ```sh
-  # when get /heroes with auth headers
   curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes
 
-  # then should get auth heroes
   HTTP/1.1 200 OK
 
   {
@@ -127,10 +124,8 @@ npm run test:docker
 - Scenario: Get authenticated single hero
 
   ```sh
-  # when get /heroes/1 with auth headers
   curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes/1
 
-  # then should get auth hero with id 1
   HTTP/1.1 200 OK
 
   {
@@ -145,3 +140,22 @@ npm run test:docker
     }
   }
   ```
+
+## Architecture
+
+### Folder structure
+
+```sh
+├── __test__
+│   └── integration # 整合測試
+├── src
+│   ├── controllers # 控制器
+│   ├── datascources # 資料來源
+│   ├── middlewares # 中間件
+│   ├── models # 資料模型
+│   ├── router # 路由
+│   └── services # 服務
+└── server.ts
+```
+
+### Third party library

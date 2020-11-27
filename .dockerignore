@@ -1,9 +1,0 @@
-.git
-
-*Dockerfile*
-*docker-compose*
-
-dist
-
-node_modules
-npm-debug.log
