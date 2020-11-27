@@ -24,7 +24,7 @@ describe('Hero resource', () => {
   jest.setTimeout(10000);
 
   const validAuthHeader = { name: 'hahow', password: 'rocks' };
-  const inValidAuthHeader = { name: 'hahow', password: 'rockssss' };
+  const invalidAuthHeader = { name: 'hahow', password: 'rockssss' };
   const heroId = '1';
 
   let server: Server;
@@ -57,7 +57,7 @@ describe('Hero resource', () => {
     it('should return 401 when has invalid auth headers', async () => {
       const res = await request(server)
         .get('/heroes')
-        .set(inValidAuthHeader);
+        .set(invalidAuthHeader);
 
       expect(res.status).toBe(401);
       expect(res.body).toMatchObject({ message: new UnauthenticatedError().message });
@@ -84,7 +84,7 @@ describe('Hero resource', () => {
     it('should return 401 when has invalid auth headers', async () => {
       const res = await request(server)
         .get(`/heroes/${heroId}`)
-        .set(inValidAuthHeader);
+        .set(invalidAuthHeader);
 
       expect(res.status).toBe(401);
       expect(res.body).toMatchObject({ message: new UnauthenticatedError().message });

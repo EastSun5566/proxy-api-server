@@ -1,16 +1,12 @@
 {
-  "name": "typescript-koa-starter",
+  "name": "proxy-api-server",
   "version": "1.0.0",
-  "description": "✨ A starter for my TypeScript Koa project",
+  "description": "A Proxy API Server",
   "scripts": {
     "start:dev": "nodemon -e ts --exec ts-node src",
-    "start": "node dist",
-    "start:docker:dev": "docker-compose up --build",
-    "start:docker": "docker-compose -f docker-compose.prod.yml up --build -d",
+    "start": "NODE_ENV=production node dist",
     "build": "tsc",
-    "build:docker": "docker-compose build",
     "test": "jest",
-    "test:docker": "docker-compose run app npm test",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src"
   },
   "keywords": [
@@ -22,9 +18,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EastSun5566/typescript-koa-starter"
+    "url": "https://github.com/EastSun5566/proxy-api-server"
   },
-  "homepage": "https://github.com/EastSun5566/typescript-koa-starter",
+  "homepage": "https://github.com/EastSun5566/proxy-api-server",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
@@ -33,17 +29,11 @@
   "dependencies": {
     "axios": "^0.21.0",
     "koa": "^2.13.0",
-    "koa-bodyparser": "^4.3.0",
-    "koa-helmet": "^6.0.0",
-    "koa-logger": "^3.2.1",
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
     "@types/koa": "^2.11.4",
-    "@types/koa-bodyparser": "^4.3.0",
-    "@types/koa-helmet": "^5.2.0",
-    "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.1",
     "@types/node": "^12.12.67",
     "@types/supertest": "^2.0.10",
@@ -55,7 +45,6 @@
     "husky": "^4.3.0",
     "jest": "^26.5.2",
     "nodemon": "^1.19.0",
-    "pm2": "^3.5.2",
     "supertest": "^5.0.0",
     "ts-jest": "^26.4.1",
     "ts-node": "^8.10.2",
