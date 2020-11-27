@@ -9,7 +9,7 @@ export interface AuthParam {
 }
 
 export interface GetHeroParam {
-  heroId: number;
+  heroId: string;
 }
 
 export class HahowAPI {

@@ -1,8 +1,10 @@
+import { AxiosError } from 'axios';
+
 import { IAuthModel } from '../models';
 import { AuthParam } from '../datasources';
 
 export interface IAuthService {
-  auth(param: AuthParam): Promise<boolean>;
+  checkAuth(param: AuthParam): Promise<boolean>;
 
 }
 
@@ -12,8 +14,18 @@ export class AuthService implements IAuthService {
     private models: { auth: IAuthModel },
   ) {}
 
-  auth(param: AuthParam): Promise<boolean> {
-    return this.models.auth.checkAuth(param);
+  async checkAuth(param: AuthParam): Promise<boolean> {
+    try {
+      const { status } = await this.models.auth.auth(param);
+
+      if (status === 200) return true;
+      return false;
+    } catch (err) {
+      if (err.isAxiosError) {
+        if ((err as AxiosError).response?.status === 401) return false;
+      }
+      throw err;
+    }
   }
 }
 

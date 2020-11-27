@@ -19,8 +19,9 @@ export const auth = (
     return;
   }
   if (!name || !password) throw new UnauthenticatedError();
+  if (!await authService.checkAuth({ name, password })) throw new UnauthenticatedError();
 
-  ctx.state.isAuth = await authService.auth({ name, password });
+  ctx.state.isAuth = true;
   await next();
 };
 

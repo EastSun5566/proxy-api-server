@@ -47,11 +47,10 @@ npm run test:docker
 - Scenario: List heroes
 
   ```sh
-  # when request path is /heroes
+  # when get /heroes
   curl -i http://localhost:8080/heroes
 
-  # then response status should be 200
-  # then response body should have heroes props
+  # then should get heroes
   HTTP/1.1 200 OK
 
   {
@@ -74,11 +73,10 @@ npm run test:docker
 - Scenario: Get single hero
 
   ```sh
-  # when request path is /heroes/1
+  # when get /heroes/1
   curl -i http://localhost:8080/heroes/1
 
-  # then response status should be 200
-  # then response body should be hero with id 1
+  # then should get hero with id 1
   HTTP/1.1 200 OK
 
   {
@@ -91,13 +89,10 @@ npm run test:docker
 - Scenario: List authenticated heroes
 
   ```sh
-  # when request path is /heroes
-  # when request has auth headers
-  curl -H 'Name: hahow' -H 'Password: rocks' http://localhost:8080/heroes
+  # when get /heroes with auth headers
+  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes
 
-  # then response status should be 200
-  # then response body should have heroes props
-  # then each hero of heros should have profile props
+  # then should get auth heroes
   HTTP/1.1 200 OK
 
   {
@@ -132,13 +127,10 @@ npm run test:docker
 - Scenario: Get authenticated single hero
 
   ```sh
-  # when request path is /heroes/1
-  # when request has auth headers
-  curl -H 'Name: hahow' -H 'Password: rocks' https://yourapiserver/heroes/1
+  # when get /heroes/1 with auth headers
+  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes/1
 
-  # then response status should be 200
-  # then response body should be hero
-  # then hero should have profile props
+  # then should get auth hero with id 1
   HTTP/1.1 200 OK
 
   {
