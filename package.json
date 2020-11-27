@@ -1,7 +1,7 @@
 {
-  "name": "typescript-koa-starter",
+  "name": "proxy-api-server",
   "version": "1.0.0",
-  "description": "✨ A starter for my TypeScript Koa project",
+  "description": "A Proxy API Server",
   "scripts": {
     "start:dev": "nodemon -e ts --exec ts-node src",
     "start": "NODE_ENV=production node dist",
@@ -18,9 +18,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EastSun5566/typescript-koa-starter"
+    "url": "https://github.com/EastSun5566/proxy-api-server"
   },
-  "homepage": "https://github.com/EastSun5566/typescript-koa-starter",
+  "homepage": "https://github.com/EastSun5566/proxy-api-server",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
