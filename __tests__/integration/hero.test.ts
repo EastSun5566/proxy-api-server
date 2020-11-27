@@ -1,16 +1,11 @@
 import { Server } from 'http';
 import request from 'supertest';
 import { Hero } from '../../src/domains';
-
 import { createServer } from '../../src/server';
-
-const AUTH_HEADERS = {
-  name: 'hahow',
-  password: 'rocks',
-};
+import { UnauthenticatedError, NotFoundError } from '../../src/utils/errors';
 
 const toBeHero = (hero: Hero, { id = '', isAuth = false } = {}) => {
-  expect(hero).toEqual({
+  expect(hero).toMatchObject({
     id: id || expect.any(String),
     name: expect.any(String),
     image: expect.any(String),
@@ -25,8 +20,13 @@ const toBeHero = (hero: Hero, { id = '', isAuth = false } = {}) => {
   });
 };
 
-describe('Hero resourse', () => {
+describe('Hero resource', () => {
   jest.setTimeout(10000);
+
+  const validAuthHeader = { name: 'hahow', password: 'rocks' };
+  const inValidAuthHeader = { name: 'hahow', password: 'rockssss' };
+  const heroId = '1';
+
   let server: Server;
 
   beforeAll(() => {
@@ -38,44 +38,63 @@ describe('Hero resourse', () => {
   });
 
   describe('GET /heroes', () => {
-    it('should get heroes', async () => {
+    it('should return 200 with heroes', async () => {
       const res = await request(server).get('/heroes');
 
       expect(res.status).toBe(200);
       res.body.heroes.forEach((hero: Hero) => toBeHero(hero));
     });
 
-    it('should get auth heroes', async () => {
+    it('should return 200 with auth heroes when has auth headers', async () => {
       const res = await request(server)
         .get('/heroes')
-        .set(AUTH_HEADERS);
+        .set(validAuthHeader);
 
       expect(res.status).toBe(200);
       res.body.heroes.forEach((hero: Hero) => toBeHero(hero, { isAuth: true }));
     });
+
+    it('should return 401 when has invalid auth headers', async () => {
+      const res = await request(server)
+        .get('/heroes')
+        .set(inValidAuthHeader);
+
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: new UnauthenticatedError().message });
+    });
   });
 
   describe('GET /heroes/:heroId', () => {
-    it('should get hero with id 1', async () => {
-      const res = await request(server).get('/heroes/1');
+    it(`should return 200 with hero which id is ${heroId}`, async () => {
+      const res = await request(server).get(`/heroes/${heroId}`);
 
       expect(res.status).toBe(200);
-      toBeHero(res.body, { id: '1' });
+      toBeHero(res.body, { id: heroId });
     });
 
-    it('should get auth hero with id 1', async () => {
+    it(`should return 200 with auth hero which id is ${heroId} when has auth headers`, async () => {
       const res = await request(server)
-        .get('/heroes/1')
-        .set(AUTH_HEADERS);
+        .get(`/heroes/${heroId}`)
+        .set(validAuthHeader);
 
       expect(res.status).toBe(200);
-      toBeHero(res.body, { id: '1', isAuth: true });
+      toBeHero(res.body, { id: heroId, isAuth: true });
     });
 
-    it('should be 404', async () => {
-      const res = await request(server).get('/heroes/9999');
+    it('should return 401 when has invalid auth headers', async () => {
+      const res = await request(server)
+        .get(`/heroes/${heroId}`)
+        .set(inValidAuthHeader);
+
+      expect(res.status).toBe(401);
+      expect(res.body).toMatchObject({ message: new UnauthenticatedError().message });
+    });
+
+    it('should return 404 when no hero id is 999', async () => {
+      const res = await request(server).get('/heroes/999');
 
       expect(res.status).toBe(404);
+      expect(res.body).toMatchObject({ message: new NotFoundError().message });
     });
   });
 });

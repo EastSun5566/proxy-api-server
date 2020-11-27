@@ -1,8 +1,8 @@
-import { AxiosError } from 'axios';
+import { AxiosPromise } from 'axios';
 import { HahowAPI, AuthParam } from '../datasources';
 
 export interface IAuthModel {
-  checkAuth(param: AuthParam): Promise<boolean>;
+  auth(param: AuthParam): AxiosPromise<void>;
 }
 
 export class AuthModel implements IAuthModel {
@@ -12,18 +12,8 @@ export class AuthModel implements IAuthModel {
     this.store = store;
   }
 
-  async checkAuth(param: AuthParam): Promise<boolean> {
-    try {
-      const { status } = await this.store.auth(param);
-
-      if (status === 200) return true;
-      return false;
-    } catch (err) {
-      if (err.isAxiosError) {
-        if ((err as AxiosError).response?.status === 401) return false;
-      }
-      throw err;
-    }
+  auth(param: AuthParam): AxiosPromise<void> {
+    return this.store.auth(param);
   }
 }
 

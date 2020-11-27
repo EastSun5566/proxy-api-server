@@ -4,7 +4,7 @@ import { State } from '../interfaces';
 import { IHeroService } from '../services';
 
 interface GetHeroDTO {
-  heroId: number
+  heroId: string;
 }
 
 interface IHeroController {

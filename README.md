@@ -90,7 +90,7 @@ npm run test:docker
 
   ```sh
   # when get /heroes with auth headers
-  curl -H 'Name: hahow' -H 'Password: rocks' http://localhost:8080/heroes
+  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes
 
   # then should get auth heroes
   HTTP/1.1 200 OK
@@ -128,7 +128,7 @@ npm run test:docker
 
   ```sh
   # when get /heroes/1 with auth headers
-  curl -H 'Name: hahow' -H 'Password: rocks' https://yourapiserver/heroes/1
+  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes/1
 
   # then should get auth hero with id 1
   HTTP/1.1 200 OK
