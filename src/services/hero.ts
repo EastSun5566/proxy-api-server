@@ -1,4 +1,4 @@
-import { IHeroModel } from '../models';
+import { HeroModel } from '../models';
 import { GetHeroParam } from '../datasources';
 import { Hero } from '../domains';
 
@@ -16,35 +16,25 @@ export interface IHeroService {
 export class HeroService implements IHeroService {
   // eslint-disable-next-line no-useless-constructor
   constructor(
-    private models: { hero: IHeroModel },
+    private models: { Hero: typeof HeroModel },
   ) {}
 
   async find({ isAuth }: QueryParam): Promise<Hero[]> {
-    if (!isAuth) return this.models.hero.find();
+    const heroes = await this.models.Hero.find();
 
-    const heroes = await this.models.hero.find();
-    const heroProfiles = await Promise.all(
-      heroes.map(({ id }) => this.models.hero.findProfileById(id)),
+    if (!isAuth) return heroes;
+
+    return Promise.all(
+      heroes.map((hero) => hero.findProfile()),
     );
-
-    return heroes.map((hero, index) => ({
-      ...hero,
-      profile: heroProfiles[index],
-    }));
   }
 
   async findById({ isAuth, heroId }: QueryParam & GetHeroParam): Promise<Hero> {
-    if (!isAuth) return this.models.hero.findById(heroId);
+    const hero = await this.models.Hero.findById(heroId);
 
-    const [hero, heroProfile] = await Promise.all([
-      this.models.hero.findById(heroId),
-      this.models.hero.findProfileById(heroId),
-    ]);
+    if (!isAuth) return hero;
 
-    return {
-      ...hero,
-      profile: heroProfile,
-    };
+    return hero.findProfile();
   }
 }
 

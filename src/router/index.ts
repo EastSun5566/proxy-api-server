@@ -6,14 +6,11 @@ import {
 } from '../controllers';
 import { HeroService } from '../services';
 import { HeroModel } from '../models';
-import { HahowAPI } from '../datasources';
 import { registerRoute, Route } from './utils';
 
 export const createRouter = (router: Router): Router => {
   const homeController = new HomeController();
-  const bookController = new HeroController(
-    new HeroService({ hero: new HeroModel({ store: new HahowAPI() }) }),
-  );
+  const bookController = new HeroController(new HeroService({ Hero: HeroModel }));
 
   const routes: Route[] = [
     {
