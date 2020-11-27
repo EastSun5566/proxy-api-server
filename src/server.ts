@@ -10,7 +10,6 @@ import { createRouter } from './router';
 import { errorHandler, auth } from './middlewares';
 
 import { AuthService } from './services';
-import { AuthModel } from './models';
 import { HahowAPI } from './datasources';
 
 interface ServerOptions extends IRouterOptions {
@@ -27,7 +26,7 @@ export const createServer = (options: ServerOptions = {}): Server => {
     .use(helmet())
     .use(bodyParser())
     .use(errorHandler())
-    .use(auth(new AuthService({ auth: new AuthModel({ store: new HahowAPI() }) })))
+    .use(auth(new AuthService({ auth: new HahowAPI() })))
     .use(router.routes())
     .use(router.allowedMethods())
     .listen(port);

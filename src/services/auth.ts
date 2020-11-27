@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 
-import { IAuthModel } from '../models';
-import { AuthParam } from '../datasources';
+import { AuthParam, HahowAPI } from '../datasources';
 
 export interface IAuthService {
   checkAuth(param: AuthParam): Promise<boolean>;
@@ -11,7 +10,7 @@ export interface IAuthService {
 export class AuthService implements IAuthService {
   // eslint-disable-next-line no-useless-constructor
   constructor(
-    private models: { auth: IAuthModel },
+    private models: { auth: HahowAPI },
   ) {}
 
   async checkAuth(param: AuthParam): Promise<boolean> {

@@ -1,32 +1,42 @@
 import { AxiosError } from 'axios';
 import { HahowAPI, GetHeroParam } from '../datasources';
-import { Hero } from '../domains';
+import { Hero, HeroProfile } from '../domains';
 import { NotFoundError } from '../utils/errors';
 
-export interface IHeroModel {
-  find(): Promise<Hero[]>;
-  findById(id: GetHeroParam['heroId']): Promise<Hero>;
-  findProfileById(id: GetHeroParam['heroId']): Promise<Hero['profile']>;
-}
+export class HeroModel implements Hero {
+  id: string;
 
-export class HeroModel implements IHeroModel {
-  store: HahowAPI
+  name: string;
 
-  constructor({ store }: { store: HahowAPI }) {
-    this.store = store;
+  image: string;
+
+  profile?: HeroProfile;
+
+  constructor({
+    id,
+    name,
+    image,
+    profile,
+  }: Hero) {
+    this.id = id;
+    this.name = name;
+    this.image = image;
+    this.profile = profile;
   }
 
-  async find(): Promise<Hero[]> {
-    const { data } = await this.store.listHeroes();
+  static store = new HahowAPI();
 
-    return data;
+  static async find(): Promise<HeroModel[]> {
+    const { data } = await HeroModel.store.listHeroes();
+
+    return data.map((heroData) => new HeroModel(heroData));
   }
 
-  async findById(id: GetHeroParam['heroId']): Promise<Hero> {
+  static async findById(id: GetHeroParam['heroId']): Promise<HeroModel> {
     try {
-      const { data } = await this.store.getHero({ heroId: id });
+      const { data } = await HeroModel.store.getHero({ heroId: id });
 
-      return data;
+      return new HeroModel(data);
     } catch (err) {
       if (err.isAxiosError) {
         if ((err as AxiosError).response?.status === 404) throw new NotFoundError();
@@ -35,11 +45,12 @@ export class HeroModel implements IHeroModel {
     }
   }
 
-  async findProfileById(id: GetHeroParam['heroId']): Promise<Hero['profile']> {
+  async findProfile(): Promise<HeroModel> {
     try {
-      const { data } = await this.store.getHeroProfile({ heroId: id });
+      const { data } = await HeroModel.store.getHeroProfile({ heroId: this.id });
 
-      return data;
+      this.profile = data;
+      return this;
     } catch (err) {
       if (err.isAxiosError) {
         if ((err as AxiosError).response?.status === 404) throw new NotFoundError();
