@@ -21,12 +21,12 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
 - Node.js v12 w/ TypeScript
 - Jest
 
-## Table of Contents
+## Table of contents
 
 - [Proxy API Server](#proxy-api-server)
   - [Required features](#required-features)
   - [Using stack](#using-stack)
-  - [Table of Contents](#table-of-contents)
+  - [Table of contents](#table-of-contents)
   - [Getting started](#getting-started)
     - [Requirement](#requirement)
     - [Installation](#installation)
@@ -35,7 +35,7 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
   - [Test cases](#test-cases)
   - [Architecture](#architecture)
     - [Folder structure](#folder-structure)
-  - [Request & Response flow](#request--response-flow)
+    - [Request & Response flow](#request--response-flow)
   - [Third party library](#third-party-library)
   - [Comment principle](#comment-principle)
   - [Problem](#problem)
@@ -202,6 +202,7 @@ npm test
 ### Folder structure
 
 ```sh
+.
 ├── __test__
 │   └── integration # 整合測試
 ├── src
@@ -214,7 +215,7 @@ npm test
 └── server.ts
 ```
 
-## Request & Response flow
+### Request & Response flow
 
 請求進入會先經過的 auth middleware 驗證權限，再經過 router 找到對應 controller，
 controller 注入 service 執行對應操作，service 視情況注入 Model 存取資料，最後回應
@@ -222,10 +223,10 @@ controller 注入 service 執行對應操作，service 視情況注入 Model 存
 ## Third party library
 
 - Typescript: 引入靜態型別至 JS 讓開發階段減少錯誤與增強自動提示
-- Koa/Koa-router: 快速建構 web App 的 web framework
+- Koa/Koa-router: 快速建構 server 的 web framework
 - Axios: 發送請求至 Hahow API 的 HTTP client
 - Jest/TS-Jest: 整合測試的 testing framework
-- Eslint\*: 程式碼風格限制與修正
+- Eslint: 程式碼風格限制與修正
 - Husky: commit 時啟動 linter 檢查與修正
 - Nodemon/TS-Node: 開發階段自動重啟 server
 
@@ -240,6 +241,6 @@ controller 注入 service 執行對應操作，service 視情況注入 Model 存
 
 ## Others
 
-- 程式碼風格採用 [Airbnb JS Style Guide](https://github.com/airbnb/javascript)
-- commit message 使用 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-- 開發流程使用 [GitHub flow](https://guides.github.com/introduction/flow/)
+- 程式碼風格使用 [Airbnb JS Style Guide](https://github.com/airbnb/javascript)
+- Git 提交訊息規格使用 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- 整體開發流程使用 [GitHub flow](https://guides.github.com/introduction/flow/)
