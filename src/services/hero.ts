@@ -1,6 +1,6 @@
 import { HeroModel } from '../models';
 import { GetHeroParam } from '../datasources';
-import { Hero } from '../domains';
+import { Hero } from '../entities';
 
 interface QueryParam {
   isAuth?: boolean

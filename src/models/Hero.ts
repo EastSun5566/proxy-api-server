@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { HahowAPI, GetHeroParam } from '../datasources';
-import { Hero, HeroProfile } from '../domains';
+import { Hero, HeroProfile } from '../entities';
 import { NotFoundError } from '../utils/errors';
 
 export class HeroModel implements Hero {

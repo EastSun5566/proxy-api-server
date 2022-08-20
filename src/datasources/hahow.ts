@@ -1,7 +1,7 @@
 import axios, { AxiosPromise } from 'axios';
 
 import { config } from '../config';
-import { Hero } from '../domains';
+import { Hero } from '../entities';
 
 export interface AuthParam {
   name: string;
