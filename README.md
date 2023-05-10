@@ -44,133 +44,133 @@ npm test
 
 - Scenario: List heroes
 
-  ```sh
-  curl -i http://localhost:8080/heroes
+```sh
+curl -i http://localhost:8080/heroes
 
-  HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-  {
-    "heroes": [
-      {
-        "id": "1",
-        "name": "Daredevil",
-        "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg"
-      },
-      {
-        "id": "2",
-        "name": "Thor",
-        "image": "http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg"
-      },
-      // ...
-    ]
-  }
-  ```
+{
+  "heroes": [
+    {
+      "id": "1",
+      "name": "Daredevil",
+      "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Thor",
+      "image": "http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg"
+    },
+    // ...
+  ]
+}
+```
 
 - Scenario: Get a single hero
 
-  ```sh
-  curl -i http://localhost:8080/heroes/1
+```sh
+curl -i http://localhost:8080/heroes/1
 
-  HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-  {
-    "id": "1",
-    "name": "Daredevil",
-    "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg"
-  }
-  ```
+{
+  "id": "1",
+  "name": "Daredevil",
+  "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg"
+}
+```
 
 - Scenario: Get a single hero with an invalid ID
 
-  ```sh
-  curl -i http://localhost:8080/heroes/999
+```sh
+curl -i http://localhost:8080/heroes/999
 
-  HTTP/1.1 404 Not Found
+HTTP/1.1 404 Not Found
 
-  {
-    "message": "Not Found"
-  }
-  ```
+{
+  "message": "Not Found"
+}
+```
 
 - Scenario: List authenticated heroes
 
-  ```sh
-  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes
+```sh
+curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes
 
-  HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-  {
-    "heroes": [
-      {
-        "id": "1",
-        "name": "Daredevil",
-        "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg",
-        "profile": {
-          "str": 2,
-          "int": 7,
-          "agi": 9,
-          "luk": 7
-        },
+{
+  "heroes": [
+    {
+      "id": "1",
+      "name": "Daredevil",
+      "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg",
+      "profile": {
+        "str": 2,
+        "int": 7,
+        "agi": 9,
+        "luk": 7
       },
-      {
-        "id": "2",
-        "name": "Thor",
-        "image": "http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg"
-        "profile": {
-          "str": 8,
-          "int": 2,
-          "agi": 5,
-          "luk": 9
-        },
+    },
+    {
+      "id": "2",
+      "name": "Thor",
+      "image": "http://x.annihil.us/u/prod/marvel/i/mg/5/a0/537bc7036ab02/standard_xlarge.jpg"
+      "profile": {
+        "str": 8,
+        "int": 2,
+        "agi": 5,
+        "luk": 9
       },
-      // ...
-    ]
-  }
-  ```
+    },
+    // ...
+  ]
+}
+```
 
 - Scenario: List authenticated heroes with invalid auth
 
-  ```sh
-  curl -H "Name: hahow" -H "Password: rockssss" http://localhost:8080/heroes
+```sh
+curl -H "Name: hahow" -H "Password: rockssss" http://localhost:8080/heroes
 
-  HTTP/1.1 401 Unauthorized
+HTTP/1.1 401 Unauthorized
 
-  {
-    "message": "Unauthenticated"
-  }
-  ```
+{
+  "message": "Unauthenticated"
+}
+```
 
 - Scenario: Get authenticated single hero
 
-  ```sh
-  curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes/1
+```sh
+curl -H "Name: hahow" -H "Password: rocks" http://localhost:8080/heroes/1
 
-  HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-  {
-    "id": "1",
-    "name": "Daredevil",
-    "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg",
-    "profile": {
-      "str": 2,
-      "int": 7,
-      "agi": 9,
-      "luk": 7
-    }
+{
+  "id": "1",
+  "name": "Daredevil",
+  "image": "http://i.annihil.us/u/prod/marvel/i/mg/6/90/537ba6d49472b/standard_xlarge.jpg",
+  "profile": {
+    "str": 2,
+    "int": 7,
+    "agi": 9,
+    "luk": 7
   }
-  ```
+}
+```
 
 - Scenario: Get authenticated single hero with invalid auth
 
-  ```sh
-  curl -H "Name: hahow" -H "Password: rockssss" http://localhost:8080/heroes/1
+```sh
+curl -H "Name: hahow" -H "Password: rockssss" http://localhost:8080/heroes/1
 
-  HTTP/1.1 401 Unauthorized
+HTTP/1.1 401 Unauthorized
 
-  {
-    "message": "Unauthenticated"
-  }
-  ```
+{
+  "message": "Unauthenticated"
+}
+```
 
 ## Architecture
 
