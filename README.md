@@ -1,6 +1,6 @@
 # Proxy API Server
 
-This project is base on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
+This project is based on my [typescript-koa-starter](https://github.com/EastSun5566/typescript-koa-starter)
 
 ## Required features
 
@@ -15,31 +15,6 @@ This project is base on my [typescript-koa-starter](https://github.com/EastSun55
   - 你對於所有使用到的第三方 library 的理解，以及他們的功能簡介
   - 你在程式碼中寫註解的原則，遇到什麼狀況會寫註解
     在這份專案中你遇到的困難、問題，以及解決的方法
-
-## Using stack
-
-- Node.js v12 w/ TypeScript
-- Jest
-
-## Table of contents
-
-- [Proxy API Server](#proxy-api-server)
-  - [Required features](#required-features)
-  - [Using stack](#using-stack)
-  - [Table of contents](#table-of-contents)
-  - [Getting started](#getting-started)
-    - [Requirement](#requirement)
-    - [Installation](#installation)
-    - [Building & Starting](#building--starting)
-    - [Testing](#testing)
-  - [Test cases](#test-cases)
-  - [Architecture](#architecture)
-    - [Folder structure](#folder-structure)
-    - [Request & Response flow](#request--response-flow)
-  - [Third party library](#third-party-library)
-  - [Comment principle](#comment-principle)
-  - [Problem](#problem)
-  - [Others](#others)
 
 ## Getting started
 
@@ -91,7 +66,7 @@ npm test
   }
   ```
 
-- Scenario: Get single hero
+- Scenario: Get a single hero
 
   ```sh
   curl -i http://localhost:8080/heroes/1
@@ -105,7 +80,7 @@ npm test
   }
   ```
 
-- Scenario: Get single hero with invalid ID
+- Scenario: Get a single hero with an invalid ID
 
   ```sh
   curl -i http://localhost:8080/heroes/999
@@ -220,7 +195,7 @@ npm test
 請求進入會先經過的 auth middleware 驗證權限，再經過 router 找到對應 controller，
 controller 注入 service 執行對應操作，service 視情況注入 Model 存取資料，最後回應
 
-## Third party library
+## Third-party library
 
 - Typescript: 引入靜態型別至 JS 讓開發階段減少錯誤與增強自動提示
 - Koa/Koa-router: 快速建構 server 的 web framework
