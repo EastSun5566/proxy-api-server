@@ -43,7 +43,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.8",
-    "jest": "^26.5.2",
+    "jest": "^29.7.0",
     "nodemon": "^2.0.20",
     "supertest": "^5.0.0",
     "ts-jest": "^26.4.1",
